@@ -1,2 +1,2 @@
 python-firebase
-pyMongo
+pymongo

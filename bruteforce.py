@@ -51,7 +51,7 @@ if __name__ == '__main__':
     mydb = myclient["logs"]
     mycol = mydb["bruteforce"]
 
-    n = 10 # <======================== change n to 15 here =============================
+    n = 15 # <======================== change n to 15 here =============================
     dataMin = [x[:n] for x in data[:n]]
     start = time.time()
 

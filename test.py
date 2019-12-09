@@ -9,3 +9,6 @@ myDict = { "time": 12.4534, "N": 5 }
 x = mycol.insert_one(myDict)
 
 print(x)
+
+# python file.py &bg;
+# nohup python3 file.py &
