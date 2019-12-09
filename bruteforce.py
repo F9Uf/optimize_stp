@@ -1,5 +1,5 @@
 import time
-import multiprocessing
+import pymongo
 
 data = [
     [0,262,398,172,601,392,185,158,181,353,557,682,249,408,491], 
@@ -47,12 +47,18 @@ def brutforce_find_min_distance(distance):
     return minSolution
 
 if __name__ == '__main__':
-  n = 7 # <======================== change n to 15 here =============================
-  dataMin = [x[:n] for x in data[:n]]
-  start = time.time()
+    myclient = pymongo.MongoClient("mongodb://157.230.44.229:27017/", username='root', password='root', authSource='logs', authMechanism='SCRAM-SHA-256')
+    mydb = myclient["logs"]
+    mycol = mydb["bruteforce"]
 
-  minDistance, chromosome = brutforce_find_min_distance(dataMin)
-  end = time.time()
-  # print('Shortest path is ' + str(chromosome) + ': ' + str(minDistance) + 'km')
-  print('time: %8.10f s' % (end - start))
+    n = 10 # <======================== change n to 15 here =============================
+    dataMin = [x[:n] for x in data[:n]]
+    start = time.time()
+
+    minDistance, chromosome = brutforce_find_min_distance(dataMin)
+    end = time.time()
+    print('Shortest path is ' + str(chromosome) + ': ' + str(minDistance) + 'km')
+    print('time: %8.10f s' % (end - start))
+    x = mycol.insert_one({ 'time': (end - start), 'N': n, 'chromosome': str(chromosome) })
+
     
