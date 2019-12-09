@@ -46,5 +46,7 @@ def calculateDistance(distance, chomosome):
 if __name__ == '__main__':
     N = 15 # number of chromosome
     pop_size = 10 # number of parent
-    populations = generatePopulation(pop_size, N)
+    generations = 5000 # number of generation
+    populations = generatePopulation(pop_size, N) # generate populations
+
     print(*populations, sep='\n')
