@@ -39,8 +39,6 @@ def brutforce_find_min_distance(distance):
         dist = calculateDistance(distance, solution)
         if minSolution[0] == 0:
             minSolution = (dist, solution)
-            del solution[:]
-            del solution
         elif dist < minSolution[0]:
             minSolution = (dist, solution)
             
@@ -51,14 +49,15 @@ if __name__ == '__main__':
     mydb = myclient["logs"]
     mycol = mydb["bruteforce"]
 
-    n = 15 # <======================== change n to 15 here =============================
-    dataMin = [x[:n] for x in data[:n]]
-    start = time.time()
-
-    minDistance, chromosome = brutforce_find_min_distance(dataMin)
-    end = time.time()
-    print('Shortest path is ' + str(chromosome) + ': ' + str(minDistance) + 'km')
-    print('time: %8.10f s' % (end - start))
-    x = mycol.insert_one({ 'time': (end - start), 'N': n, 'chromosome': str(chromosome) })
+    N = 12 # <======================== change n to 15 here =============================
+    for n in range(2, N + 1):
+        dataMin = [x[:n] for x in data[:n]]
+        for r in range(5):
+            # loop 5 time for each data set
+            start = time.time() # start time
+            minDistance, chromosome = brutforce_find_min_distance(dataMin)
+            end = time.time() # end time
+            print('N: %d | round: %d | shortest path: %s : %dkm | time: %8.10fs' % (n, r+1, chromosome, minDistance, (end - start)))
+            x = mycol.insert_one({ 'N': n, 'round': r+1, 'chromosome': str(chromosome), 'distance': minDistance, 'time': (end - start) })
 
     
