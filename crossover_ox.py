@@ -40,8 +40,8 @@ def calculateDistance(distance, chromosome):
     return d
 
 def ox_crossover(parent_1, parent_2, N = 15):
-  start = 3
-  end = 7
+  start = randint(0, N)
+  end = randint(start, N)
   subParent_1 = parent_1[start:end+1]
   subParent_2 = parent_2[start:end+1]
   child_1 = parent_1
