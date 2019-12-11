@@ -40,8 +40,10 @@ def calculateDistance(distance, chromosome):
     return d
 
 def ox_crossover(parent_1, parent_2, N = 15):
-  start = randint(0, N)
-  end = randint(start, N)
+  start = randint(0, N-1)
+  end = randint(start, N-1)
+  if(end-start == 11):
+    end = end - 1
   subParent_1 = parent_1[start:end+1]
   subParent_2 = parent_2[start:end+1]
   child_1 = parent_1
@@ -49,10 +51,10 @@ def ox_crossover(parent_1, parent_2, N = 15):
   parent_1 = [ x for x in parent_1 if x not in subParent_2]
   parent_2 = [ x for x in parent_2 if x not in subParent_1]
   if(end != N-1):
-    child_1[end+1:N] = parent_2[N-len(subParent_1)-end:]
-    child_2[end+1:N] = parent_1[N-len(subParent_2)-end:]
-  child_1[0:start] = parent_2[:N-len(subParent_1)-start+1]
-  child_2[0:start] = parent_1[:N-len(subParent_2)-start+1]
+    child_1[end+1:N] = parent_2[len(parent_2)-N+end+1:]
+    child_2[end+1:N] = parent_1[len(parent_1)-N+end+1:]
+  child_1[:start] = parent_2[:start]
+  child_2[:start] = parent_1[:start]
   return [child_1, child_2]
 
 
@@ -63,4 +65,5 @@ if __name__ == '__main__':
   pop_size = 50
   generations = 5000
   populations = generatePopulation(pop_size, N)
-  ox_crossover([8,4,7,3,6,2,5,1,9,0], [0,1,2,3,4,5,6,7,8,9], 10)
+  result = ox_crossover(populations[0], populations[1], N)
+  print(result)
